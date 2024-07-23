@@ -1,0 +1,23 @@
+﻿  cal stuff.hpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\um\winnt.h(169,1): error C1189: #error:  "No Target Architecture"
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  Cheats.cpp
+C:\Users\boyo\source\repos\Pasterx\Pasterx\Menu.hpp(38,21): error C7525: inline variables require at least '/std:c++17'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\Menu.hpp(40,21): error C7525: inline variables require at least '/std:c++17'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\Menu.hpp(43,16): error C7525: inline variables require at least '/std:c++17'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\config.h(3,14): error C7525: inline variables require at least '/std:c++17'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\config.h(4,14): error C7525: inline variables require at least '/std:c++17'
+  Menu.cpp
+C:\Users\boyo\source\repos\Pasterx\Pasterx\Menu.hpp(38,21): error C7525: inline variables require at least '/std:c++17'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\Menu.hpp(40,21): error C7525: inline variables require at least '/std:c++17'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\Menu.hpp(43,16): error C7525: inline variables require at least '/std:c++17'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\config.h(3,14): error C7525: inline variables require at least '/std:c++17'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\config.h(4,14): error C7525: inline variables require at least '/std:c++17'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\Menu.cpp(171,21): error C2440: '=': cannot convert from 'const char [14]' to 'LPCWSTR'
+C:\Users\boyo\source\repos\Pasterx\Pasterx\Menu.cpp(175,12): error C2664: 'HWND CreateWindowExW(DWORD,LPCWSTR,LPCWSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID)': cannot convert argument 3 from 'const char [6]' to 'LPCWSTR'

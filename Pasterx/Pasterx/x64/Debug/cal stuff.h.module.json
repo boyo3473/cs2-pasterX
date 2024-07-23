@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Debug\\cal stuff.h.obj",
+            "outputs": [
+                "C:\\Users\\boyo\\source\\repos\\Pasterx\\Pasterx\\x64\\Debug\\vc143.pdb",
+                "x64\\Debug\\",
+                "C:\\Users\\boyo\\source\\repos\\Pasterx\\Pasterx\\x64\\Debug\\cal stuff.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "cal stuff.h",
+                    "source-path": "c:\\users\\boyo\\source\\repos\\pasterx\\pasterx\\cal stuff.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
