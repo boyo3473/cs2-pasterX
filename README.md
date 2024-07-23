@@ -1,2 +1,4 @@
 # cs2-pasterX
-a repos for you skids
+# paste this all you want 
+
+# https://discord.gg/5Xzp35ZVtd
