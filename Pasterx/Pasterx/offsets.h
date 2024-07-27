@@ -1,14 +1,14 @@
 #include <cstddef>
 namespace offsets {
 	//Buttons.hpp
-	constexpr std::ptrdiff_t Force_Jump = 0x181D670;
+	constexpr std::ptrdiff_t Force_Jump = 25286272;
 
 	//offsets.hpp
-	constexpr std::ptrdiff_t dwEntityList = 0x19BEEB0;
-	constexpr std::ptrdiff_t dwLocalPlayerPawn = 0x1824A08;
-	constexpr std::ptrdiff_t dwViewAngles = 0x1A2E248;
+	constexpr std::ptrdiff_t dwEntityList = 0x19BEED0;
+	constexpr std::ptrdiff_t dwLocalPlayerPawn = 0x1824A18;
+	constexpr std::ptrdiff_t dwViewAngles = 0x1A2E268;
 	constexpr std::ptrdiff_t m_hPlayerPawn = 0x7DC; // CHandle<C_CSPlayerPawn>
-	constexpr std::ptrdiff_t dwViewMatrix = 0x1A20CD0;
+	constexpr std::ptrdiff_t dwViewMatrix = 0x1A20CF0;
 
 	//client.dll
 	constexpr std::ptrdiff_t m_iIDEntIndex = 0x13A8;
@@ -30,6 +30,9 @@ namespace offsets {
 	constexpr std::ptrdiff_t m_iAccount = 0x40; // int32
 	constexpr std::ptrdiff_t m_pInGameMoneyServices = 0x6F0; // CCSPlayerController_InGameMoneyServices*
 
+	constexpr std::ptrdiff_t m_aimPunchAngle = 0x14CC; // QAngle
+	constexpr std::ptrdiff_t m_iShotsFired = 0x22B4; // int32
 
+	constexpr std::ptrdiff_t m_firePositions = 0xD38; // Vector[64]
 
 }
