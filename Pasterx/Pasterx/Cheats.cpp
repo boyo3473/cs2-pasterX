@@ -148,7 +148,7 @@ void boxesp() {
 
                 ImDrawList* drawList = ImGui::GetBackgroundDrawList();
 
-                drawList->AddRect(boxMin, boxMax, IM_COL32(255, 255, 255, 255), 5.5f, 0, 2.0f);
+                drawList->AddRect(boxMin, boxMax, IM_COL32(255, 255, 255, 255), 0.5f, 0, 2.0f);
 
                 drawList->AddText(boxMin, IM_COL32(255, 0, 0, 255), "Your gay");
 
@@ -156,6 +156,74 @@ void boxesp() {
         }
     }
 }
+
+
+
+void snaplines() {
+    if (config::snaplines)
+    {
+
+        view_matrix_t matrix = VARS::memRead<view_matrix_t>(VARS::baseAddress + offsets::dwViewMatrix);
+
+        uintptr_t localPlayer = VARS::memRead<uintptr_t>(VARS::baseAddress + offsets::dwLocalPlayerPawn);
+        if (!localPlayer)
+            return;
+
+        int localPlayerTeam = VARS::memRead<int>(localPlayer + offsets::m_iTeamNum);
+
+        for (int i = 1; i < 64; i++) {
+            uintptr_t entityList = VARS::memRead<uintptr_t>(VARS::baseAddress + offsets::dwEntityList);
+
+            uintptr_t listEntry1 = VARS::memRead<uintptr_t>(entityList + ((8 * (i & 0x7FFF) >> 9) + 16));
+            if (!listEntry1)
+                continue;
+
+            uintptr_t playerController = VARS::memRead<uintptr_t>(listEntry1 + 120 * (i & 0x1FF));
+            if (!playerController)
+                continue;
+
+            uint32_t PlayerPawn1 = VARS::memRead<uint32_t>(playerController + offsets::m_hPlayerPawn);
+            if (!PlayerPawn1)
+                continue;
+
+            uintptr_t listEntry2 = VARS::memRead<uintptr_t>(entityList + 0x8 * ((PlayerPawn1 & 0x1FFF) >> 9) + 16);
+            if (!listEntry2)
+                continue;
+
+            uintptr_t entityPawn = VARS::memRead<uintptr_t>(listEntry2 + 120 * (PlayerPawn1 & 0x1FF));
+            if (!entityPawn)
+                continue;
+
+            if (entityPawn == localPlayer)
+                continue;
+
+            int playerHealth = VARS::memRead<int>(entityPawn + offsets::m_iHealth);
+            if (playerHealth <= 0)
+                continue;
+
+            const auto playerTeam = VARS::memRead<int>(entityPawn + offsets::m_iTeamNum);
+
+
+            if (config::team_check && playerTeam == VARS::memRead<int>(localPlayer + offsets::m_iTeamNum))
+                continue;
+
+            Vector3 playerPos = VARS::memRead<Vector3>(entityPawn + offsets::vecOrigin);
+
+            Vector3 screenPos = worldToScreen(matrix, playerPos);
+
+            ImDrawList* drawList = ImGui::GetBackgroundDrawList();
+
+            if (screenPos.z > 0.001f) {
+                drawList->AddLine(ImVec2(ImGui::GetIO().DisplaySize.x * 0.5f, ImGui::GetIO().DisplaySize.y * 0.5f), ImVec2(screenPos.x, screenPos.y), IM_COL32(255, 255, 255, 255), 1.0f);
+
+               
+            }
+
+
+        }
+    }
+}
+
 
 Vector3 CalcAngle(Vector3 src, Vector3 dst) {
     Vector3 angles;
@@ -237,9 +305,17 @@ void Aimbot() {
                 continue;
             }
 
+            uintptr_t gameScene = VARS::memRead<uintptr_t>(entityPawn + offsets::m_pGameSceneNode);
+            uintptr_t boneArray = VARS::memRead<uintptr_t>(gameScene + offsets::m_modelState + 0x80);
+            view_matrix_t matrix = VARS::memRead<view_matrix_t>(VARS::baseAddress + offsets::dwViewMatrix);
+            Vector3 headBone = VARS::memRead<Vector3>(boneArray + 6 * 32);
+            Vector3 headPos = headBone;
+
+           
+
             Vector3 enemyPos = VARS::memRead<Vector3>(entityPawn + offsets::vecOrigin);
 
-            Vector3 angleToEnemy = CalcAngle(localPlayerPos, enemyPos);
+            Vector3 angleToEnemy = CalcAngle(localPlayerPos, headBone);
             Vector3 currentViewAngles = VARS::memRead<Vector3>(VARS::baseAddress + offsets::dwViewAngles);
 
             float angleDifference = fabs(angleToEnemy.y - currentViewAngles.y);
@@ -265,9 +341,57 @@ void Aimbot() {
             }
         }
 
-        Sleep(1);
     }
 }
+
+template <typename T>
+constexpr const T& clamp(const T& v, const T& lo, const T& hi) {
+    return (v < lo) ? lo : (hi < v) ? hi : v;
+}
+
+void norecoil() {
+
+
+        Vector3 oldPunch(0.0f, 0.0f, 0.0f);
+
+        while (true) {
+       
+            uintptr_t localPlayer = VARS::memRead<uintptr_t>(VARS::baseAddress + offsets::dwLocalPlayerPawn);
+            if (!localPlayer) {
+                Sleep(10);
+                continue;
+            }
+
+            const auto& shotsFired = VARS::memRead<std::int32_t>(localPlayer + offsets::m_iShotsFired);
+
+            if (shotsFired > 0 && config::RCS) {
+                const auto& viewAngles = VARS::memRead<Vector3>(VARS::baseAddress + offsets::dwViewAngles);
+                const auto& aimPunch = VARS::memRead<Vector3>(localPlayer + offsets::m_aimPunchAngle);
+
+                auto newAngles = Vector3{
+                    viewAngles.x + oldPunch.x - aimPunch.x * 2.f,
+                    viewAngles.y + oldPunch.y - aimPunch.y * 2.f,
+                    viewAngles.z
+                };
+
+                newAngles.x = clamp(newAngles.x, -89.f, 89.f);
+                while (newAngles.y > 180.f) newAngles.y -= 360.f;
+                while (newAngles.y < -180.f) newAngles.y += 360.f;
+
+                VARS::memWrite<Vector3>(VARS::baseAddress + offsets::dwViewAngles, newAngles);
+
+                oldPunch.x = aimPunch.x * 2.f;
+                oldPunch.y = aimPunch.y * 2.f;
+            }
+            else {
+                oldPunch.x = 0.f;
+                oldPunch.y = 0.f;
+            }
+
+            Sleep(1);
+        }
+    }
+
 
 void noflash() {
     while (true)
@@ -315,7 +439,7 @@ int main() {
 
   
     ImGuiIO& io = ImGui::GetIO();
-    ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Bahnschrift.ttf", 24.0f);
+    ImFont* font = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Bahnschrift.ttf", 14.0f);
     IM_ASSERT(font != NULL);
 
     io.Fonts->Build();
@@ -324,6 +448,7 @@ int main() {
     std::thread Aim(Aimbot);
     std::thread nf(noflash);
     std::thread Bhop(bunny_hop);
+    std::thread norecoil_thread(norecoil);
 
     while (overlay.shouldRun) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -335,6 +460,7 @@ int main() {
         }
 
         boxesp();
+        snaplines();
         drawFov();
 
         overlay.EndRender();
@@ -344,6 +470,8 @@ int main() {
     Aim.join();
     nf.join();
     Bhop.join();
+
+    norecoil_thread.join(); // Join the norecoil thread
 
     overlay.DestroyImGui();
     overlay.DestroyDevice();
