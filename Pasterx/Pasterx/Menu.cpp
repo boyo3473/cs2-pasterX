@@ -94,8 +94,10 @@ void Overlay::Render()
 
 	ImGui::Text("Visuals");
 	ImGui::Checkbox("Box esp", &config::Boxesp);
+	ImGui::Checkbox("Snapline esp", &config::snaplines);
 
 	ImGui::Text("Exploits");
+	ImGui::Checkbox("RCS", &config::RCS);
 	ImGui::Checkbox("Bunny hop", &config::bunny_hop);
 	ImGui::Checkbox("No flash", &config::noflash);
 
