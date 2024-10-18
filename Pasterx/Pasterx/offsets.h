@@ -1,7 +1,7 @@
 #include <cstddef>
 namespace offsets {
 
-	constexpr std::ptrdiff_t Force_Jump = 25286272;
+	constexpr std::ptrdiff_t Force_Jump = 0x182AAF0;
 
 	constexpr std::ptrdiff_t dwEntityList = 0x19CCAD8;
 	constexpr std::ptrdiff_t dwLocalPlayerPawn = 0x1831AE8;
