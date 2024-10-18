@@ -1,38 +1,34 @@
 #include <cstddef>
 namespace offsets {
-	//Buttons.hpp
+
 	constexpr std::ptrdiff_t Force_Jump = 25286272;
 
-	//offsets.hpp
-	constexpr std::ptrdiff_t dwEntityList = 0x19BEED0;
-	constexpr std::ptrdiff_t dwLocalPlayerPawn = 0x1824A18;
-	constexpr std::ptrdiff_t dwViewAngles = 0x1A2E268;
-	constexpr std::ptrdiff_t m_hPlayerPawn = 0x7DC; // CHandle<C_CSPlayerPawn>
-	constexpr std::ptrdiff_t dwViewMatrix = 0x1A20CF0;
+	constexpr std::ptrdiff_t dwEntityList = 0x19CCAD8;
+	constexpr std::ptrdiff_t dwLocalPlayerPawn = 0x1831AE8;
+	constexpr std::ptrdiff_t dwViewAngles = 0x1A38AB0;
+	constexpr std::ptrdiff_t dwViewMatrix = 0x1A2EC30;
 
-	//client.dll
-	constexpr std::ptrdiff_t m_iIDEntIndex = 0x13A8;
-	constexpr std::ptrdiff_t m_iTeamNum = 0x3C3;
-	constexpr std::ptrdiff_t m_iHealth = 0x324;
-	constexpr std::ptrdiff_t fFlags = 0x3CC;
-	constexpr std::ptrdiff_t vecOrigin = 0x1274;
-	constexpr std::ptrdiff_t m_flFlashDuration = 0x135C;
-	constexpr std::ptrdiff_t m_entitySpottedState = 0x2288; // EntitySpottedState_t
+	constexpr std::ptrdiff_t m_iIDEntIndex = 0x1458;
+	constexpr std::ptrdiff_t m_iTeamNum = 0x3E3;
+	constexpr std::ptrdiff_t m_iHealth = 0x344;
+	constexpr std::ptrdiff_t fFlags = 0x3EC;
+	constexpr std::ptrdiff_t vecOrigin = 0x1324;
+	constexpr std::ptrdiff_t m_flFlashDuration = 0x140C;
+
+	constexpr std::ptrdiff_t m_entitySpottedState = 0x2288;
 	constexpr std::ptrdiff_t m_bSpottedByMask = 0xC;
-	constexpr std::ptrdiff_t m_iszPlayerName = 0x630; // char[128]
-	constexpr std::ptrdiff_t m_iBoneIndex = 0xF00; // int32
-	constexpr std::ptrdiff_t m_vecViewOffset = 0xC50; // CNetworkViewOffsetVector
-	constexpr std::ptrdiff_t m_pGameSceneNode = 0x308; // CGameSceneNode*
-	constexpr std::ptrdiff_t m_modelState = 0x170; // CModelState
 
-	
+	constexpr std::ptrdiff_t m_iszPlayerName = 0x630;
+	constexpr std::ptrdiff_t m_iBoneIndex = 0xFB0;
+	constexpr std::ptrdiff_t m_vecViewOffset = 0xCB0;
+	constexpr std::ptrdiff_t m_pGameSceneNode = 0x328;
+	constexpr std::ptrdiff_t m_modelState = 0x170;
 
-	constexpr std::ptrdiff_t m_iAccount = 0x40; // int32
-	constexpr std::ptrdiff_t m_pInGameMoneyServices = 0x6F0; // CCSPlayerController_InGameMoneyServices*
+	constexpr std::ptrdiff_t m_iAccount = 0x40;
+	constexpr std::ptrdiff_t m_pInGameMoneyServices = 0x6F0;
 
-	constexpr std::ptrdiff_t m_aimPunchAngle = 0x14CC; // QAngle
-	constexpr std::ptrdiff_t m_iShotsFired = 0x22B4; // int32
-
-	constexpr std::ptrdiff_t m_firePositions = 0xD38; // Vector[64]
+	constexpr std::ptrdiff_t m_aimPunchAngle = 0x14CC;
+	constexpr std::ptrdiff_t m_iShotsFired = 0x22B4;
+	constexpr std::ptrdiff_t m_hPlayerPawn = 0x80C;
 
 }
